@@ -3,14 +3,22 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule} from "@angular/common/http";
+import { HomeComponent } from './home/home.component';
+import { PokemonComponentComponent } from './pokemon-component/pokemon-component.component';
+import { NavComponentComponent } from './nav-component/nav-component.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    PokemonComponentComponent,
+    NavComponentComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration()
