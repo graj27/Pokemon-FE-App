@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Pokemon } from "../../shared/models/pokemon"; // Ensure this path is correct
-import { map, Observable } from "rxjs";
+import {find, forkJoin, map, Observable} from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import {MappedPokemonResponse} from "../../shared/models/MappedPokemonResponse";
 
-// Updated interface to match the API response structure
 interface PokemonApiResponse {
   name: string;
   id: number;
@@ -17,30 +16,37 @@ interface PokemonApiResponse {
   };
 }
 
-// New interface for the mapped response
-interface MappedPokemonResponse {
-  name: string;
-  id: number;
-  weight: number;
-  image: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
-  private url = 'https://pokeapi.co/api/v2/pokemon/7';
+  private url = 'https://pokeapi.co/api/v2/pokemon/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getPokemonsData(): Observable<MappedPokemonResponse> { // Adjusted the return type
-    return this.http.get<PokemonApiResponse>(this.url).pipe(
-      map(response => ({
-        name: response.name,
-        id: response.id,
-        weight: response.weight,
-        image: response.sprites.other.dream_world.front_default
-      }))
-    );
+  getPokemonsData(): Observable<MappedPokemonResponse[]> {
+    const requests = [];
+    for (let i = 1; i <= 7; i++) {
+      const request = this.http.get<PokemonApiResponse>(this.url + i).pipe(
+        map(response => ({
+          name: response.name,
+          id: response.id,
+          weight: response.weight,
+          image: response.sprites.other.dream_world.front_default
+        }))
+      );
+      requests.push(request);
+    }
+    return forkJoin(requests);
   }
+
+
+  // getPokemonData(pokemonId:string ): Observable<MappedPokemonResponse> {
+  //   const request=this.http.get<MappedPokemonResponse>(this.url + pokemonId).pipe(
+  //     find(pokemon=>pokemon.id == parseInt(pokemonId))
+  //   )
+  //   return request;
+  // }
+
+
 }

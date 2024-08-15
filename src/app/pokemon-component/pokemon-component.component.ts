@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Pokemon } from "../shared/models/pokemon"; // Ensure this path is correct
+// import { Pokemon } from "../shared/models/pokemon"; // Ensure this path is correct
 import { PokemonService } from "../services/pokemon/pokemon.service";
+import {MappedPokemonResponse} from "../shared/models/MappedPokemonResponse";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-pokemon-component',
@@ -8,16 +10,28 @@ import { PokemonService } from "../services/pokemon/pokemon.service";
   styleUrls: ['./pokemon-component.component.scss'] // Correct path
 })
 export class PokemonComponentComponent implements OnInit {
-  pokemon: Pokemon = new Pokemon(); // Ensure this is defined correctly in your model
+  pokemons: MappedPokemonResponse[] = [];
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(private pokemonService: PokemonService,
+              private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.pokemonService.getPokemonsData().subscribe(pokemonData => {
-      // Set the properties of the Pokemon object directly
-      this.pokemon.id = pokemonData.id;
-      this.pokemon.name = pokemonData.name;
-      this.pokemon.imageUrl = pokemonData.image; // Ensure 'imageUrl' is the correct property name
-    });
+    this.pokemonService.getPokemonsData().subscribe(
+      pokemonData => {
+        this.pokemons = pokemonData;
+      },
+      error => {
+        console.error('Error fetching Pokemon data:', error);
+      },
+
+    );
+
+    this.activatedRoute.params.subscribe(params=>{
+      console.log(params);
+      if(params['id']){
+
+      }
+    })
   }
 }
