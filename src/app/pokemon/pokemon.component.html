@@ -1,0 +1,11 @@
+<div class="pokemon" *ngIf="pokemons">
+  <div class="pokemon-item" *ngFor="let pokemon of pokemons" >
+    <a href="/pokemon/{{pokemon.id}}" >
+      <h3>{{ pokemon.name | uppercase}} (ID: {{ pokemon.id }})</h3>
+      <img [src]="pokemon.sprites.front_default" alt="{{ pokemon.name }}"/>
+      <p>Weight: {{ pokemon.weight }}</p>
+    </a>
+  </div>
+</div>
+
+

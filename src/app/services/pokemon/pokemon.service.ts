@@ -1,52 +1,50 @@
 import { Injectable } from '@angular/core';
-import {find, forkJoin, map, Observable} from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import {catchError, find, forkJoin, map, Observable, tap, throwError} from "rxjs";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MappedPokemonResponse} from "../../shared/models/MappedPokemonResponse";
+import {NUMBER_OF_POKEMONS} from "../../shared/Constants";
+import {environment} from "../../../environments/environment";
 
-interface PokemonApiResponse {
-  name: string;
-  id: number;
-  weight: number;
-  sprites: {
-    other: {
-      dream_world: {
-        front_default: string;
-      };
-    };
-  };
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
-  private url = 'https://pokeapi.co/api/v2/pokemon/';
+  private url = environment.pokemonAPI;
 
   constructor(private http: HttpClient) {}
 
+  private errorHandler(errorType: HttpErrorResponse) {
+    let errorMesg="";
+
+    if (errorType.error instanceof ErrorEvent){
+      errorMesg=errorType.error.message + "ytrewqfdsa";
+    }
+    else{
+      errorMesg=`cccccccccccccError Code : ${errorType.status} \n Message: ${errorType.message}`;
+    }
+
+    return throwError(()=>{
+      console.log(errorMesg);
+      // return errorMesg;
+    });
+  }
+
   getPokemonsData(): Observable<MappedPokemonResponse[]> {
     const requests = [];
-    for (let i = 1; i <= 7; i++) {
-      const request = this.http.get<PokemonApiResponse>(this.url + i).pipe(
-        map(response => ({
-          name: response.name,
-          id: response.id,
-          weight: response.weight,
-          image: response.sprites.other.dream_world.front_default
-        }))
-      );
+    for (let i = 1; i <= environment.numPokemon; i++) {
+      let request = this.getPokemonDetailsbyId(i);
+     //adding results to array requests
       requests.push(request);
     }
+    //using forkjoin to combine all api get requests
     return forkJoin(requests);
   }
 
+  getPokemonDetailsbyId(pokemonId: number):Observable<MappedPokemonResponse>{
+    return this.http.get<any>(`${this.url}/${pokemonId}`).pipe(
+      tap(),
+    );
 
-  // getPokemonData(pokemonId:string ): Observable<MappedPokemonResponse> {
-  //   const request=this.http.get<MappedPokemonResponse>(this.url + pokemonId).pipe(
-  //     find(pokemon=>pokemon.id == parseInt(pokemonId))
-  //   )
-  //   return request;
-  // }
-
-
+  }
 }
