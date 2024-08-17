@@ -1,5 +1,5 @@
-<div>
-  <img [src]="pokemon_item.sprites.front_default">
+<div *ngIf="pokemon_item">
+  <img [src]="pokemon_item.sprites.other.dream_world.front_default">
   <p>{{pokemon_item.name}}</p>
 </div>
 

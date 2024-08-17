@@ -1,7 +1,0 @@
-<div class="pokemon">
-  <div class="pokemon-item" *ngFor="let pokemon of pokemons">
-    <h3>{{ pokemon.name |uppercase}} (ID: {{ pokemon.id }})</h3>
-    <img [src]="pokemon.image" alt="{{ pokemon.name }}"  (click)="getPokemonDetails()"/>
-    <p>Weight: {{ pokemon.weight }}</p>
-  </div>
-</div>

@@ -1,10 +1,19 @@
 export interface Sprites {
-  front_default: string;
+  other:{
+    dream_world:{
+      front_default:string
+    }
+}
+}
+
+export interface Species{
+  url:string
 }
 
 export interface MappedPokemonResponse {
   name: string;
   id: number;
   weight: number;
-  sprites: Sprites
+  sprites: Sprites;
+  species: Species;
 }

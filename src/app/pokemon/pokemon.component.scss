@@ -13,6 +13,7 @@ div.pokemon-item {
     border: 3px solid darkslategray;
     padding: 1rem;
     background-color: antiquewhite;
+    border-radius: 1rem;
   }
   img:hover {
     width: 18rem;
@@ -22,4 +23,10 @@ div.pokemon-item {
     padding: 1rem;
     cursor: pointer;
   }
+}
+
+
+a{
+  text-decoration: none;
+  color: darkslategray;
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {catchError, find, forkJoin, map, Observable, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MappedPokemonResponse} from "../../shared/models/MappedPokemonResponse";
-import {NUMBER_OF_POKEMONS} from "../../shared/Constants";
+// import {NUMBER_OF_POKEMONS} from "../../shared/Constants";
 import {environment} from "../../../environments/environment";
 
 
@@ -10,7 +10,12 @@ import {environment} from "../../../environments/environment";
   providedIn: 'root'
 })
 export class PokemonService {
+
+  /**Getting API Urls from environment file
+   **/
   private url = environment.pokemonAPI;
+  private speciesAPI=environment.speciesAPI;
+  private evolutionAPI=environment.evolutionAPI;
 
   constructor(private http: HttpClient) {}
 
@@ -18,10 +23,10 @@ export class PokemonService {
     let errorMesg="";
 
     if (errorType.error instanceof ErrorEvent){
-      errorMesg=errorType.error.message + "ytrewqfdsa";
+      errorMesg=errorType.error.message;
     }
     else{
-      errorMesg=`cccccccccccccError Code : ${errorType.status} \n Message: ${errorType.message}`;
+      errorMesg=`Error Code : ${errorType.status} \n Message: ${errorType.message}`;
     }
 
     return throwError(()=>{
@@ -45,6 +50,9 @@ export class PokemonService {
     return this.http.get<any>(`${this.url}/${pokemonId}`).pipe(
       tap(),
     );
-
   }
+
+  /**Retrieving Species details
+   **/
+
 }
