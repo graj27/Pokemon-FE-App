@@ -7,7 +7,7 @@ import {PokemonEvolutionComponent} from "./pokemon-evolution/pokemon-evolution.c
 const routes: Routes = [
   { path: '', component: PokemonComponent },
   {path: 'pokemon/:id', component:PokemonPageComponent},
-  {path: 'pokemonEvolution/:id', component: PokemonEvolutionComponent},
+  {path: 'pokemonEvolution/:evoid', component: PokemonEvolutionComponent},
 ];
 
 @NgModule({

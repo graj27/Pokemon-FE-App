@@ -14,12 +14,14 @@ export class PokemonComponent implements OnInit {
 
   ngOnInit() {
     this.setUp();
+
   }
 
   private setUp() {
     this.pokemonService.getPokemonsData()
       .subscribe(pokemonData => {
         this.pokemons = pokemonData;
+          this.pokemonService.mesg="Hello Pokemon";
       },
       error => {
         console.error('Error fetching Pokemon data:', error);

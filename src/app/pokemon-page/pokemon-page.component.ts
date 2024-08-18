@@ -13,11 +13,11 @@ export class PokemonPageComponent implements OnInit{
   constructor(
     private pokemonService: PokemonService,
     private activatedRoute: ActivatedRoute
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     this.setUp();
+    console.log(this.pokemonService.mesg);
   }
 
 
@@ -35,4 +35,8 @@ export class PokemonPageComponent implements OnInit{
       }
     })
   }
+
+
+
+
 }
