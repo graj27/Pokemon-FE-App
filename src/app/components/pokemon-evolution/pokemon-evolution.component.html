@@ -1,0 +1,22 @@
+<app-pokemon-navbar></app-pokemon-navbar>
+<p>pokemon-evolution works!</p>
+<p>current pokemon id: {{pokemonId}}</p>
+<div *ngIf="pokemonEvolution">
+  <div class="pokemon-evolution-item">
+    <img [src]="pokemonNameId[0].image" alt="{{pokemonEvolution?.chain?.species?.name}}">
+    <p class="{{currentPokemonName === pokemonEvolution?.chain?.species?.name ? 'currentPokemon' : ''}}" >
+    {{pokemonEvolution?.chain?.species?.name}}</p>
+  </div>
+
+<div class="pokemon-evolution-item">
+  <img [src]="pokemonNameId[1].image" alt="{{pokemonEvolution?.chain?.evolves_to[0]?.species?.name}}">
+  <p class="{{currentPokemonName === pokemonEvolution?.chain?.evolves_to[0]?.species?.name ? 'currentPokemon' : ''}}">
+    {{pokemonEvolution?.chain?.evolves_to[0]?.species?.name}}</p>
+</div>
+<div class="pokemon-evolution-item">
+  <img [src]="pokemonNameId[2].image" alt="{{pokemonEvolution?.chain?.evolves_to[0]?.evolves_to[0]?.species?.name }}">
+<p class="{{currentPokemonName === pokemonEvolution?.chain?.evolves_to[0]?.evolves_to[0]?.species?.name ? 'currentPokemon' : ''}}">
+  {{pokemonEvolution?.chain?.evolves_to[0]?.evolves_to[0]?.species?.name}}</p>
+</div>
+</div>
+

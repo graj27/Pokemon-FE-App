@@ -13,7 +13,6 @@ export interface Species{
 export interface MappedPokemonResponse {
   name: string;
   id: number;
-  weight: number;
   sprites: Sprites;
   species: Species;
 }

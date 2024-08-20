@@ -1,0 +1,19 @@
+li{
+  list-style-type: none;
+}
+
+li a:hover {
+  color: lightseagreen;
+}
+
+div.pokemon.details{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size:1.5rem;
+  font-weight: 600;
+  color:darkslategray;
+  border-bottom: 1px solid bisque;
+  font-family: "Chakra Petch";
+  margin: 0 auto;
+}

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PokemonService} from "../services/pokemon/pokemon.service";
-import {ActivatedRoute} from "@angular/router";
+import {PokemonService} from "../../services/pokemon/pokemon.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-pokemon-page',
@@ -9,21 +9,23 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class PokemonPageComponent implements OnInit{
   pokemon_item:any;
+  pokid?:string;
 
   constructor(
     private pokemonService: PokemonService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.setUp();
-    console.log(this.pokemonService.mesg);
   }
 
 
   private setUp() {
     this.activatedRoute.params.subscribe(params => {
       if (params['id']) {
+        this.pokid=params['id'];
         this.pokemonService.getPokemonDetailsbyId(params['id']).subscribe(
           pokemon => {
             this.pokemon_item = pokemon;
@@ -36,6 +38,9 @@ export class PokemonPageComponent implements OnInit{
     })
   }
 
+   NavigateToPokemon(){
+    this.router.navigateByUrl('/pokemon/'+ this.pokid);
+  }
 
 
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {catchError, find, forkJoin, map, Observable, tap, throwError} from "rxjs";
+import {BehaviorSubject, catchError, find, forkJoin, map, Observable, tap, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MappedPokemonResponse} from "../../shared/models/MappedPokemonResponse";
 // import {NUMBER_OF_POKEMONS} from "../../shared/Constants";
@@ -19,11 +19,8 @@ export class PokemonService {
   private url = environment.pokemonAPI;
   private speciesAPI=environment.speciesAPI;
   private pokemonDataById: any;
-  public mesg:string="";
 
   constructor(private http: HttpClient) {}
-
-
   private errorHandler(errorType: HttpErrorResponse) {
     let errorMesg="";
 
@@ -40,8 +37,6 @@ export class PokemonService {
     });
   }
 
-
-
   getPokemonsData(): Observable<MappedPokemonResponse[]> {
     const requests = [];
     for (let i = 1; i <= environment.numPokemon; i++) {
@@ -53,16 +48,22 @@ export class PokemonService {
     return forkJoin(requests);
   }
 
+  /**
+  Getting Pokemon details by Id
+   */
   getPokemonDetailsbyId(pokemonId: number):Observable<MappedPokemonResponse>{
     return this.http.get<any>(`${this.url}/${pokemonId}`);
   }
 
-  /**Retrieving Species
+  /**Retrieving evolution url
    **/
   getEvolutionInfoById(pokemonId: number):Observable<PokemonEvolutionInfo>{
    return this.http.get<any>(`${this.speciesAPI}/${pokemonId}`);
   }
 
+  /**
+   * Retrieving evolution chain for pokemon
+   */
   getEvolutionChainById(evolutionAPI: string):Observable<PokemonEvolutionChain>{
     return this.http.get<any>(`${evolutionAPI}`);
   }
